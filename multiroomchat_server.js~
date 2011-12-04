@@ -1,0 +1,46 @@
+var fs = require('fs');
+var server = require('http').createServer(function(req, response){
+  fs.readFile(__dirname+'/multiroomchat.html', function(err, data){
+    response.writeHead(200, {'Content-Type':'text/html'});
+    response.write(data);
+    response.end();
+  });
+});
+server.listen(8080);
+
+
+var nowjs = require("now");
+var everyone = nowjs.initialize(server);
+
+var admin_id = 0;
+
+nowjs.on('connect', function(){
+  if(this.now.name == "admin") {
+        admin_id = this.user.clientId;
+	console.log("Joined: " + this.now.name+ " "+ this.user.clientId);
+  } else {
+
+	if(admin_id!=0){
+	  this.now.room = this.user.clientId;
+          user_name = this.now.name;
+	  nowjs.getGroup(this.now.room).addUser(admin_id);
+	  nowjs.getGroup(this.now.room).addUser(this.user.clientId);
+	  nowjs.getClient(admin_id,function(){
+			this.now.add_client(user_name,this.user.clientId);
+	  });
+	  console.log("Joined: " + this.now.name+ " "+ this.user.clientId);
+	  }else{
+	    this.now.receiveMessage("SErver","Admin is offline.Contact later!");
+            this.now.deletechat();
+	 }
+  }
+});
+
+
+nowjs.on('disconnect', function(){
+  console.log("Left: " + this.now.name);
+});
+
+everyone.now.distributeMessage = function(message){
+  nowjs.getGroup(this.now.room).now.receiveMessage(this.now.name, message);
+};
