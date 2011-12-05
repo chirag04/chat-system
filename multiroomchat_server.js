@@ -38,7 +38,7 @@ nowjs.on('connect', function(){
 	  nowjs.getGroup(client_id).addUser(client_id);
           console.log("Joined: " + username + " "+ client_id);
           nowjs.getClient(admin_id, function () {
-	      this.now.addUser(username,client_id);
+	      this.now.add_User(username,client_id);
 	  });
 	  }else{
 	    this.now.receiveMessage("Admin","We are offline now.Contact later!");
@@ -48,7 +48,17 @@ nowjs.on('connect', function(){
 });
 
 nowjs.on('disconnect', function(){
-  console.log("Left: " + this.now.name);
+    if(this.user.clientId!=admin_id){
+	console.log(this.user.clientId);
+        nowjs.getGroup(this.user.clientId).removeUser(this.user.clientId);
+	nowjs.getGroup(this.user.clientId).removeUser(admin_id);
+	nowjs.getClient(admin_id, function(){ 
+	    this.now.remove_user(this.user.client_id);
+	});
+    }else{
+         
+    }
+    console.log("Left: " + this.now.name);
 });
 
 everyone.now.distributeMessage = function(message,isadmin,room){

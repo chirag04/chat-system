@@ -20,8 +20,12 @@ $(document).ready(function(){
      $("#chat").css("display","block");
   }
 
-  now.addUser = function(name,client_id){
-    $("#users").append("<br><input type='button' value='"+name+"' onclick='now.set_User(\""+client_id+"\");' />");
+  now.add_User = function(name,client_id){
+    $("#users").append("<br><div id='"+client_id+"'><input type='button' value='"+name+"' onclick='now.set_User(\""+client_id+"\");' /></div>");
+  }
+
+now.remove_user = function(clientid){
+    $('#'+clientid).remove();
   }
 
  now.set_User = function(userid){
@@ -41,7 +45,7 @@ $(document).ready(function(){
 <body>
 
 <br>
-<div id="messages"><br>You're in room 1</div>
+<div id="messages"><br>Welcome Admin</div>
 <div id = "chat">
 <input type="text" id="text-input">
 <input type="button" value="Send" id="send-button">
