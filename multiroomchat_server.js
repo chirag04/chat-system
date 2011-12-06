@@ -49,16 +49,18 @@ nowjs.on('connect', function(){
 
 nowjs.on('disconnect', function(){
     if(this.user.clientId!=admin_id){
-	console.log(this.user.clientId);
+        clientid = this.user.clientId;
         nowjs.getGroup(this.user.clientId).removeUser(this.user.clientId);
-	nowjs.getGroup(this.user.clientId).removeUser(admin_id);
+	if(admin_id!=0){
+	    nowjs.getGroup(this.user.clientId).removeUser(admin_id);
+	}
 	nowjs.getClient(admin_id, function(){ 
-	    this.now.remove_user(this.user.client_id);
+	    this.now.remove_user(clientid);
 	});
     }else{
-         
+	everyone.now.deletechat();
+	admin_id=0;
     }
-    console.log("Left: " + this.now.name);
 });
 
 everyone.now.distributeMessage = function(message,isadmin,room){

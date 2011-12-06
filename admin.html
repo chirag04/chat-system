@@ -25,7 +25,8 @@ $(document).ready(function(){
   }
 
 now.remove_user = function(clientid){
-    $('#'+clientid).remove();
+    selector = 'div#'+clientid;
+    $(selector).remove();
   }
 
  now.set_User = function(userid){
