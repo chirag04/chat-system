@@ -7,7 +7,7 @@
 <script>
 
 $(document).ready(function(){
-  var user_id = "";
+  var buyer_id = "";
   now.receiveMessage = function(name, message){
     $("#messages").append("<br>" + name + ": " + message);
   }
@@ -20,21 +20,21 @@ $(document).ready(function(){
      $("#chat").css("display","block");
   }
 
-  now.add_User = function(name,client_id){
-    $("#users").append("<br><div id='"+client_id+"'><input type='button' value='"+name+"' onclick='now.set_User(\""+client_id+"\");' /></div>");
+  now.add_buyer = function(name,buyer_id){
+    $("#buyers").append("<br><div id='"+buyer_id+"'><input type='button' value='"+name+"' onclick='now.set_buyer(\""+buyer_id+"\");' /></div>");
   }
 
-now.remove_user = function(clientid){
-    selector = 'div#'+clientid;
+now.remove_buyer = function(buyer_id){
+    selector = 'div#'+buyer_id;
     $(selector).remove();
   }
 
- now.set_User = function(userid){
-      user_id = userid;
+ now.set_buyer = function(buyerid){
+      buyer_id = buyerid;
  }
 
  $("#send-button").click(function(){
-    now.distributeMessage($("#text-input").val(),1,user_id);
+    now.distributeMessage($("#text-input").val(),1,buyer_id);
     $("#text-input").val("");
   });
   now.name = "Admin";
@@ -51,6 +51,6 @@ now.remove_user = function(clientid){
 <input type="text" id="text-input">
 <input type="button" value="Send" id="send-button">
 </div>
-<div id="users"></div>
+<div id="buyers"></div>
 </body>
 </html>

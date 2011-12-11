@@ -32,16 +32,14 @@ nowjs.on('connect', function(){
 
 	if(admin_id!=0){
           username = this.now.name;
-          this.now.room = this.now.clientId;
           client_id = this.user.clientId; 
-	  nowjs.getGroup(client_id).addUser(admin_id);
-	  nowjs.getGroup(client_id).addUser(client_id);
-          console.log("Joined: " + username + " "+ client_id);
+	  	  nowjs.getGroup(client_id).addUser(admin_id);
+	  	  nowjs.getGroup(client_id).addUser(client_id);
           nowjs.getClient(admin_id, function () {
-	      this.now.add_User(username,client_id);
-	  });
+	      		this.now.add_buyer(username,client_id);
+	  	  });
 	  }else{
-	    this.now.receiveMessage("Admin","We are offline now.Contact later!");
+	    	this.now.receiveMessage("Admin","We are offline now.Contact later!");
             this.now.deletechat();
 	 }
   }
@@ -51,15 +49,15 @@ nowjs.on('disconnect', function(){
     if(this.user.clientId!=admin_id){
         clientid = this.user.clientId;
         nowjs.getGroup(this.user.clientId).removeUser(this.user.clientId);
-	if(admin_id!=0){
-	    nowjs.getGroup(this.user.clientId).removeUser(admin_id);
-	}
-	nowjs.getClient(admin_id, function(){ 
-	    this.now.remove_user(clientid);
-	});
+		if(admin_id!=0){
+		    nowjs.getGroup(this.user.clientId).removeUser(admin_id);
+			nowjs.getClient(admin_id, function(){ 
+			    this.now.remove_buyer(clientid);
+			});
+		}
     }else{
-	everyone.now.deletechat();
-	admin_id=0;
+		everyone.now.deletechat();
+		admin_id=0;
     }
 });
 
