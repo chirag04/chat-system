@@ -3,8 +3,53 @@
 <head>
 <title>nowjs test</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://static_code.coursekit.com/a31cb8ba9fea4575b5626ebcd914e66c/css/compiled/coursekit_style.css" />
 <script src="/nowjs/now.js"></script>
+<style type="text/css">
+
+.container {
+	position:fixed;
+    	bottom:0;
+    	right:0;
+    	margin-right:10px;	
+	width:250px;
+	font-size: 14px;
+	font-family: arial;
+}
+
+.header{
+	height: 35px;
+	background: #08a2d1;
+	border-radius: 4px 4px 0px 0px;
+}
+
+.header p{
+	padding: 9px 0px 0px 10px;
+	color: #FFF;
+}
+
+.body{
+	height: 245px;
+	border: 1px solid #DDD;
+	padding:0 5px;
+}
+
+.bottom{
+	height: 20px;
+	text-align: center;
+}
+
+.top{
+	height: 180px;
+	word-wrap: break-word;
+	overflow: auto;
+}
+
+.middle {
+	
+}
+
+</style>
+
 <script>
 
 $(document).ready(function(){
@@ -20,41 +65,35 @@ $(document).ready(function(){
      $("#chat").css("display","block");
   }
 
- $("#send-button").click(function(){
-    now.distributeMessage($("#text-input").val(),0,'');
-    $("#text-input").val("");
+ $("#text-input").keydown(function(event){
+    if (event.keyCode == '13') {
+	now.distributeMessage($("#text-input").val(),0,'');
+	$("#text-input").val("");
+    }
   });
+
   now.name = prompt("What's your name?");
   $(".chat-title").html(now.name);
+
 });
 
 </script>
 </head>
-
 <body>
-
-<div class="chat-dock">
-	<div class="chat-windows">
-		<div class="chat-holder">
-			<div class="chat-window">
-				<div class="chat-header">
-					<span class="chat-title"></span>
-					<span class="chat-controls">
-						<a class="chat-close" href="#"></a>
-						<a class="chat-minimize" href="#"></a>
-					</span>
-				</div>
-				<div class="chat-body" style="display: block;">
-						<div id="messages"></div>
-						<div id = "chat">
-							<input type="text" id="text-input">
-							<input type="button" value="Send" id="send-button">
-						</div>
-				</div>
-			</div>
+<div class="container">
+	<div class="header">
+		<p>Got Questions?</p>
+	</div>
+	<div class="body">
+		<div class="top" id="messages" >
+		</div>
+		<div class="middle" id="chat">
+			<input type="text" id="text-input" value= "Type here and hit <enter> to chat" style="width: 98%; height:35px;" />
+		</div>
+		<div class="bottom">
+			Powered by Chirag
 		</div>
 	</div>
 </div>
-<div>
 </body>
 </html>
